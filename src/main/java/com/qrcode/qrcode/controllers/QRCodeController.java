@@ -28,13 +28,8 @@ public class QRCodeController {
                               @RequestBody String text,
                               @RequestParam(defaultValue = "350") int width,
                               @RequestParam(defaultValue = "350") int height) throws Exception{
-        BufferedImage image = qrCodeService.generarQRCodeService(text, width, height);
-        ServletOutputStream outputStream = response.getOutputStream();
-        ImageIO.write(image, "png", outputStream);
-        outputStream.flush();
-        outputStream.close();
-        /*logger.info("Generando código QR para el texto: {}", text);
+        logger.info("Generando código QR para el texto: {}", text);
         qrCodeDao.generarQRCode(response, text, width, height);
-        logger.info("Código QR generado con éxito para el texto: {}", text);*/
+        logger.info("Código QR generado con éxito para el texto: {}", text);
     }
 }
