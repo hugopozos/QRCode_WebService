@@ -10,4 +10,6 @@ public interface QRCodeDao {
                        @RequestBody String text,
                        @RequestParam(defaultValue = "350") int width,
                        @RequestParam(defaultValue = "350") int height) throws Exception;
+
+
 }

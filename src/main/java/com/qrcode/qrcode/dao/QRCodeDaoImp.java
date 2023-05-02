@@ -23,9 +23,9 @@ public class QRCodeDaoImp implements QRCodeDao{
 
     @Autowired
     private QRCodeService qrCodeService;
+
     @Override
     @Transactional
-
     public void generarQRCode(HttpServletResponse response,
                               @RequestBody String text,
                               @RequestParam(defaultValue = "350") int width,
@@ -36,7 +36,6 @@ public class QRCodeDaoImp implements QRCodeDao{
         outputStream.flush();
         outputStream.close();
     }
-
 
 
 

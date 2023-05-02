@@ -11,32 +11,34 @@ document.addEventListener('DOMContentLoaded', function() {
 async function generarQRCode() {
     let datos = {};
     datos.texto  = document.getElementById('text').value;
-    datos.width  = document.getElementById('width').value;
-    datos.height = document.getElementById('height').value;
+    datos.width  = 350;
+    datos.height = 350;
 
 
-    fetch('/api/qrcode', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(datos)
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error al generar código QR');
-            }
-            return response.text();
-        })
-        .then(data => {
-            console.log(datos);
-            // mostrar el código QR generado en el DOM
-            const qrCode = document.createElement('img');
-            qrCode.src = `data:image/png;base64,${data}`;
-            document.body.appendChild(qrCode);
-        })
-        .catch(error => {
-            console.error(error);
-            alert('Error al generar código QR');
+    try {
+        const response = await fetch('/api/qrcode', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datos)
         });
+
+        if (!response.ok) {
+            throw new Error('Error al generar código QR');
+        }
+
+        const data = await response.text();
+        console.log(data);
+
+        // mostrar el código QR generado en el DOM
+        const qrCode = document.createElement('img');
+        qrCode.src = `data:image/png;base64,${data}`;
+        document.getElementById('qr-container').appendChild(qrCode); // agregamos el código QR al contenedor
+
+        window.location.href = '/api/qrcode';
+    } catch (error) {
+        console.error(error);
+        alert('Error al generar código QR');
+    }
 }
