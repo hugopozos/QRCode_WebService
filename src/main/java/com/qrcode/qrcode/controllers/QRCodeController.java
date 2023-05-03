@@ -1,18 +1,18 @@
 package com.qrcode.qrcode.controllers;
 
-import com.qrcode.qrcode.utils.EncryptionService;
-import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.qrcode.qrcode.dao.QRCodeDao;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.qrcode.qrcode.utils.QRCodeService;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.security.MessageDigest;
-import org.apache.commons.codec.binary.Hex;
+import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class QRCodeController {
@@ -21,9 +21,6 @@ public class QRCodeController {
 
     @Autowired
     private QRCodeDao qrCodeDao;
-
-    @Autowired
-    private QRCodeService qrCodeService;
 
     /* Función para encriptar un texto con MD5
     private String encryptWithMD5(String text) throws Exception {
@@ -37,14 +34,36 @@ public class QRCodeController {
     public void generarQRCode(HttpServletResponse response,
                               @RequestBody String text,
                               @RequestParam(defaultValue = "350") int width,
-                              @RequestParam(defaultValue = "350") int height) throws Exception{
+                              @RequestParam(defaultValue = "350") int height) throws Exception {
 
-        String correoEncriptado = EncryptionService.encrypt(text);
-
-        logger.info("Generando código QR para el texto: {}", text);
+        String correoEncriptado = qrCodeDao.encriptarQRCode(text);
+        logger.info("Generando código QR para el texto: {}", correoEncriptado);
         qrCodeDao.generarQRCode(response, correoEncriptado, width, height);
-        logger.info("Código QR generado con éxito para el texto: {}", correoEncriptado);
-        String correoDesencriptado = EncryptionService.decrypt(correoEncriptado);
-        logger.info("Codigo desencriptado: {}", correoDesencriptado);
+
     }
+
+    @PostMapping("/api/leer_qrcode")
+    @ResponseBody
+    public Map<String, String> leerQRCode(@RequestBody Map<String, String> requestMap) throws Exception {
+        String qrData = requestMap.get("qrData");
+        String qrDataDesencriptado = "";
+        if (qrData != null) {
+            qrDataDesencriptado = qrCodeDao.desencriptarQRCode(qrData);
+            logger.info("Correo Desencriptado: {}", qrDataDesencriptado);
+        }
+        // Devuelve el valor de qrDataDesencriptado en formato JSON
+        Map<String, String> responseMap = new HashMap<>();
+        responseMap.put("qrDataDesencriptado", qrDataDesencriptado);
+        return responseMap;
+    }
+
+
+
+
+
+
+
+
+
+
 }

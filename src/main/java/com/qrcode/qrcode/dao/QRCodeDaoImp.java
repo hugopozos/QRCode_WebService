@@ -18,9 +18,6 @@ import java.awt.image.BufferedImage;
 @Transactional
 public class QRCodeDaoImp implements QRCodeDao{
 
-    @PersistenceContext
-    EntityManager entityManager; // EntityManager permite interactuar con una base de datos
-
     @Autowired
     private QRCodeService qrCodeService;
 
@@ -37,6 +34,15 @@ public class QRCodeDaoImp implements QRCodeDao{
         outputStream.close();
     }
 
+    @Override
+    public String encriptarQRCode(String correoEncriptado) throws Exception {
+        return qrCodeService.encriptar(correoEncriptado);
+    }
+
+    @Override
+    public String desencriptarQRCode(String correoEncriptado) throws Exception {
+        return qrCodeService.desencriptar(correoEncriptado);
+    }
 
 
 }

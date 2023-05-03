@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>QR Code Scanner</title>
+  <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/leerqrcode.css">
 </head>
 <body>
+<div id="camara">
+  <h2>Escanea tu código QR</h2>
+  <video id="preview"></video>
+  <div id="qrDataDesencriptado"></div>
 
+</div>
+<br>
+
+<script src="js/leerQRCode.js"></script>
 </body>
 </html>

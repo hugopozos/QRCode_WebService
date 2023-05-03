@@ -11,5 +11,8 @@ public interface QRCodeDao {
                        @RequestParam(defaultValue = "350") int width,
                        @RequestParam(defaultValue = "350") int height) throws Exception;
 
+    String encriptarQRCode(String correoEncriptado) throws Exception;
+
+    String desencriptarQRCode(String correoEncriptado) throws  Exception;
 
 }
