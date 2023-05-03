@@ -22,24 +22,14 @@ public class QRCodeController {
     @Autowired
     private QRCodeDao qrCodeDao;
 
-    /* Función para encriptar un texto con MD5
-    private String encryptWithMD5(String text) throws Exception {
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(text.getBytes());
-        byte[] digest = md.digest();
-        return Hex.encodeHexString(digest);
-    } */
-
     @PostMapping("/api/qrcode")
     public void generarQRCode(HttpServletResponse response,
                               @RequestBody String text,
                               @RequestParam(defaultValue = "350") int width,
                               @RequestParam(defaultValue = "350") int height) throws Exception {
-
         String correoEncriptado = qrCodeDao.encriptarQRCode(text);
-        logger.info("Generando código QR para el texto: {}", correoEncriptado);
+        logger.info("Generando código encriptado QR para el texto: {}", text);
         qrCodeDao.generarQRCode(response, correoEncriptado, width, height);
-
     }
 
     @PostMapping("/api/leer_qrcode")
@@ -53,7 +43,7 @@ public class QRCodeController {
         }
         // Devuelve el valor de qrDataDesencriptado en formato JSON
         Map<String, String> responseMap = new HashMap<>();
-        qrDataDesencriptado = qrDataDesencriptado.replace("%40", "@");
+        qrDataDesencriptado = qrDataDesencriptado.replace("%40", "@"); // Reemplaza el valor hexadecimal del arroba (%40) por @
         String qrText = qrDataDesencriptado.substring(5); // Elimina los primeros 5 caracteres ("text=")
         responseMap.put("qrDataDesencriptado", qrText);
         return responseMap;

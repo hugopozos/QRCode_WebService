@@ -3,7 +3,6 @@ scanner.addListener('scan', function(content) {
     // Aquí puedes hacer lo que necesites con el contenido del código QR escaneado
     console.log(content);
     scanner.stop();
-
     // Realiza una petición a la API para obtener los datos del QR desencriptado
     // Convierte los datos en strings y envíalos a través de la petición POST
     let dataString = JSON.stringify({ qrData: String(content) });
@@ -19,7 +18,6 @@ scanner.addListener('scan', function(content) {
         .then(data => {
             // Aquí puedes hacer lo que necesites con los datos obtenidos de la API
             console.log(data)
-
             // Obtener el elemento div creado en el HTML y asignarle el valor de qrDataDesencriptado
             const qrDataDesencriptadoDiv = document.getElementById('qrDataDesencriptado');
             qrDataDesencriptadoDiv.innerHTML = `Hola ${data.qrDataDesencriptado} gracias por tu visita`;
