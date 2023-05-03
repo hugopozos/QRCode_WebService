@@ -27,6 +27,7 @@ public class QRCodeDaoImp implements QRCodeDao{
                               @RequestBody String text,
                               @RequestParam(defaultValue = "350") int width,
                               @RequestParam(defaultValue = "350") int height) throws Exception {
+       // String qrText = text.substring(5); // Elimina los primeros 5 caracteres ("text=")
         BufferedImage image = qrCodeService.generarQRCodeService(text, width, height);
         ServletOutputStream outputStream = response.getOutputStream();
         ImageIO.write(image, "png", outputStream);

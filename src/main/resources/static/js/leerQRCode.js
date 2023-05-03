@@ -22,7 +22,7 @@ scanner.addListener('scan', function(content) {
 
             // Obtener el elemento div creado en el HTML y asignarle el valor de qrDataDesencriptado
             const qrDataDesencriptadoDiv = document.getElementById('qrDataDesencriptado');
-            qrDataDesencriptadoDiv.innerHTML = `Hola: ${data.qrDataDesencriptado}`;
+            qrDataDesencriptadoDiv.innerHTML = `Hola ${data.qrDataDesencriptado} gracias por tu visita`;
         })
         .catch(error => {
             console.error(error);

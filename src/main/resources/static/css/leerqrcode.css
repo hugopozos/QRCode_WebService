@@ -26,3 +26,7 @@
     margin-bottom: 1rem; /* Agrega un poco de espacio inferior para separar el h2 del video */
     color: white;
 }
+
+#qrDataDesencriptado {
+    color: white;
+}

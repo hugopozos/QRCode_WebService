@@ -53,7 +53,9 @@ public class QRCodeController {
         }
         // Devuelve el valor de qrDataDesencriptado en formato JSON
         Map<String, String> responseMap = new HashMap<>();
-        responseMap.put("qrDataDesencriptado", qrDataDesencriptado);
+        qrDataDesencriptado = qrDataDesencriptado.replace("%40", "@");
+        String qrText = qrDataDesencriptado.substring(5); // Elimina los primeros 5 caracteres ("text=")
+        responseMap.put("qrDataDesencriptado", qrText);
         return responseMap;
     }
 
